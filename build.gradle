@@ -1,99 +1,42 @@
-plugins {
-    id 'com.android.application'
-    id 'com.google.secrets_gradle_plugin' version '0.5'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.1.3"
+        classpath 'com.google.gms:google-services:4.3.5'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
 }
 
-android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
-
-    defaultConfig {
-        applicationId "com.example.justintimecycling"
-        minSdkVersion 23
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        debug {
-            debuggable true
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                // Do not change the username below.
+                // This should always be `mapbox` (not your username).
+                username = 'mapbox'
+                // Use the secret token you stored in gradle.properties as the password
+                password = project.properties['MAPBOX_DOWNLOADS_TOKEN'] ?: ""
+            }
         }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+        maven { url 'https://mapbox.bintray.com/mapbox' }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     }
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
-
-    //test
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    //Firebase
-    implementation platform('com.google.firebase:firebase-bom:27.0.0')
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-firestore'
-    implementation 'com.google.firebase:firebase-inappmessaging:20.0.0'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:20.0.0'
-    implementation 'com.google.firebase:firebase-messaging'
-    implementation 'com.google.firebase:firebase-storage'
-    implementation 'com.google.firebase:firebase-functions'
-    implementation 'com.google.firebase:firebase-database'
-    implementation 'com.firebase:firebase-client-android:2.5.0'
-    implementation 'com.google.firebase:firebase-core:19.0.0'
-
-    //Google services and maps
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
-    implementation 'com.google.android.libraries.places:places:2.4.0'
-    implementation 'com.google.maps:google-maps-services:0.18.0'
-    implementation 'org.slf4j:slf4j-simple:1.7.25'
-    implementation 'com.google.maps.android:android-maps-utils:2.2.2'
-
-    //layout and stuff
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation "androidx.cardview:cardview:1.0.0"
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
-    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.legacy:legacy-support-v4'
-    implementation "androidx.drawerlayout:drawerlayout:1.1.1"
-    implementation 'androidx.navigation:navigation-ui:2.3.5'
-    implementation 'androidx.navigation:navigation-fragment:2.3.5'
-
-    implementation "androidx.core:core"
-
-    //other
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-
-    //mapbox
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation-ui:0.43.0-alpha.1'
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.1'
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
-
-secrets {
-    defaultPropertiesFileName 'local.defaults.properties'
-}
-
-apply plugin: 'com.google.gms.google-services'
