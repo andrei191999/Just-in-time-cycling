@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "239273580709",
+    "project_id": "just-in-time-cycling-83f2d",
+    "storage_bucket": "just-in-time-cycling-83f2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239273580709:android:f5dfc3a18562f21390954c",
+        "android_client_info": {
+          "package_name": "com.example.justintimecycling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239273580709-a7q3sv5bjnun9lj0li7qmjibq0bbn7hk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDffLkA6d_vNwgz-dBnZ3FipS1g6VhBbxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239273580709-a7q3sv5bjnun9lj0li7qmjibq0bbn7hk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
